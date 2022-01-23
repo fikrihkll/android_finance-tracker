@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="titleStaticColor" format="reference" />
+    <attr name="titleInDarkColor" format="reference" />
+    <attr name="cardColorCustom" format="reference" />
+    <attr name="backgroundColorCustom" format="reference" />
+    <attr name="backgroundSoftColorCustom" format="reference" />
+    <attr name="shadowColorCustom" format="reference" />
+    <attr name="titleSoftColor" format="reference"/>
+    <attr name="backgroundBottomSheet" format="reference"/>
+</resources>
