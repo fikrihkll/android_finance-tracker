@@ -19,6 +19,7 @@ object Util {
         "Drink",
         "Shopping",
         "Subscription",
+        "Transportation",
     )
 
     val simpleDate = SimpleDateFormat("yyyyMd")
