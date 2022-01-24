@@ -14,6 +14,8 @@ class RecentLogsAdapter(private val context: Context):RecyclerView.Adapter<Recen
 
     private val listData = mutableListOf<Logs>()
 
+    private var onLongClickListener : ((Long)->Unit)? = null
+
     class CustomVH(view: LayoutLogsBinding):RecyclerView.ViewHolder(view.root) {
 
         val tvCategory = view.tvCategory
@@ -21,7 +23,7 @@ class RecentLogsAdapter(private val context: Context):RecyclerView.Adapter<Recen
         val tvDesc = view.tvDesc
         val tvDate = view.tvDate
         val tvNominal = view.tvNominal
-
+        val cardLog = view.cardLog
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomVH {
@@ -35,6 +37,11 @@ class RecentLogsAdapter(private val context: Context):RecyclerView.Adapter<Recen
         holder.tvDate.text = listData[position].date
         holder.tvNominal.text = "Rp.${listData[position].nominal}"
         holder.ivCategory.setImageDrawable(getIcon(listData[position].category))
+
+        holder.cardLog.setOnLongClickListener {
+            onLongClickListener?.invoke(listData[position].id)
+            true
+        }
     }
 
     private fun getIcon(category: String):Drawable?{
@@ -64,6 +71,10 @@ class RecentLogsAdapter(private val context: Context):RecyclerView.Adapter<Recen
                 return context.getDrawable(R.drawable.ic_baseline_backpack_24)
             }
         }
+    }
+
+    fun onLongClick(listener:(Long)-> Unit){
+        this.onLongClickListener = listener
     }
 
     fun setNewData(listData: List<Logs>){

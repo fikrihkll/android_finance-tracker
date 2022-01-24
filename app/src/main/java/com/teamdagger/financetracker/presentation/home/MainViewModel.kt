@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.synapsisid.smartdeskandroombooking.util.DataState
 import com.teamdagger.financetracker.domain.entities.Logs
 import com.teamdagger.financetracker.domain.entities.MonthExpense
+import com.teamdagger.financetracker.domain.usecase.DeleteLog
 import com.teamdagger.financetracker.domain.usecase.GetExpenseInMonthUseCase
 import com.teamdagger.financetracker.domain.usecase.GetRecentLogsUseCase
 import com.teamdagger.financetracker.domain.usecase.InsertLogUseCase
@@ -21,6 +22,7 @@ constructor(
     private val getExpenseInMonthUseCase: GetExpenseInMonthUseCase,
     private val getRecentLogsUseCase: GetRecentLogsUseCase,
     private val insertLogUseCase: InsertLogUseCase,
+    private val deleteLog: DeleteLog,
     private val savedStateHandle: SavedStateHandle
 ):ViewModel() {
 
@@ -36,6 +38,10 @@ constructor(
     private val _insertLogStateEvent: MutableLiveData<DataState<Long>> = MutableLiveData()
     val insertLogStateEvent: LiveData<DataState<Long>>
         get() = _insertLogStateEvent
+
+    private val _deleteLogStateEvent: MutableLiveData<DataState<Int>> = MutableLiveData()
+    val deleteLogStateEvent: LiveData<DataState<Int>>
+        get() = _deleteLogStateEvent
 
     fun setExpenseState(month: Int, year: Int){
         viewModelScope.launch {
@@ -59,6 +65,15 @@ constructor(
             getRecentLogsUseCase.execute().onEach {
                 _recentLogsStateEvent.value = it
             }.launchIn(viewModelScope)
+        }
+    }
+
+    fun deleteLog(id: Long){
+        viewModelScope.launch {
+            coroutineScope {
+                val response = async(Dispatchers.IO) { deleteLog.execute(id) }
+                _deleteLogStateEvent.value = response.await()
+            }
         }
     }
 

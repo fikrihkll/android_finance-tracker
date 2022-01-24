@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.synapsisid.smartdeskandroombooking.util.DataState
 import com.synapsisid.smartdeskandroombooking.util.Util
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         subscribeExpense()
         subscribeInsertLog()
         subscribeRecentLogs()
+        subscribeDeleteLogs()
         prepareRc()
         onClick()
 
@@ -54,6 +56,12 @@ class MainActivity : AppCompatActivity() {
         binding.rcRecentLogs.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = adapterRc
+        }
+
+        adapterRc.onLongClick{
+            AlertDialog.Builder(this).setMessage("Delete This Log?").setPositiveButton("Yea") { _, _ ->
+                viewModel.deleteLog(it)
+            }.setNegativeButton("Nope") {_,_ -> }.show()
         }
     }
 
@@ -123,6 +131,17 @@ class MainActivity : AppCompatActivity() {
             when(it){
                 is DataState.Success ->{
                     binding.tvExpense.text = "Rp.${it.data.total}"
+                }
+            }
+        })
+    }
+
+    private fun subscribeDeleteLogs() {
+        viewModel.deleteLogStateEvent.observe(this, {
+            when(it){
+                is DataState.Success ->{
+                    viewModel.setExpenseState(cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR))
+                    viewModel.setRecentLogsState()
                 }
             }
         })

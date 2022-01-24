@@ -10,5 +10,6 @@ interface FinanceRepository {
     suspend fun getExpenseInMonth(month: Int, year: Int): Flow<DataState<MonthExpense>>
     suspend fun getRecentLogs():Flow<DataState<List<Logs>>>
     suspend fun insertLogs(data: Logs):DataState<Long>
+    suspend fun deleteLog(id: Long):DataState<Int>
 
 }

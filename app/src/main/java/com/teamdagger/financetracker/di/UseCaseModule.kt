@@ -1,6 +1,7 @@
 package com.teamdagger.financetracker.di
 
 import com.teamdagger.financetracker.domain.repositories.FinanceRepository
+import com.teamdagger.financetracker.domain.usecase.DeleteLog
 import com.teamdagger.financetracker.domain.usecase.GetExpenseInMonthUseCase
 import com.teamdagger.financetracker.domain.usecase.GetRecentLogsUseCase
 import com.teamdagger.financetracker.domain.usecase.InsertLogUseCase
@@ -28,5 +29,10 @@ object UseCaseModule {
     @Provides
     fun provideInsertLogUseCase(repo: FinanceRepository): InsertLogUseCase {
         return InsertLogUseCase(repo)
+    }
+
+    @Provides
+    fun provideDeleteLogUseCase(repo: FinanceRepository): DeleteLog {
+        return DeleteLog(repo)
     }
 }

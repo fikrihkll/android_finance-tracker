@@ -25,4 +25,7 @@ interface FinanceDao {
     @Query("SELECT*FROM logs_table WHERE month = :month AND year = :year ORDER BY date DESC")
     suspend fun getLogsInMonth(month: Int, year: Int ):List<LogsTable>
 
+    @Query("DELETE FROM logs_table WHERE id = :id")
+    suspend fun deleteLog(id: Long):Int
+
 }

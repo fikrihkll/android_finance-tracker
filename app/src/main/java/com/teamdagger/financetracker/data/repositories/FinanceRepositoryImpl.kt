@@ -62,5 +62,21 @@ class FinanceRepositoryImpl(
         }
     }
 
+    override suspend fun deleteLog(id: Long): DataState<Int> {
+        return try {
+            coroutineScope {
+                val response = async(Dispatchers.IO) { localDao.deleteLog(id) }
+
+                delay(1000)
+
+                return@coroutineScope DataState.Success(response.await())
+            }
+        } catch (e: Exception) {
+            return DataState.Error(e)
+        }
+    }
+
+
+
 
 }
