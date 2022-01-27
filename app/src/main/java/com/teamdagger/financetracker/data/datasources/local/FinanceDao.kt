@@ -22,8 +22,8 @@ interface FinanceDao {
     @Query("SELECT SUM(nominal) as total FROM logs_table WHERE month = :month AND year = :year")
     suspend fun getMonthExpense(month: Int, year: Int):MonthExpenseModel
 
-    @Query("SELECT*FROM logs_table WHERE month = :month AND year = :year ORDER BY date DESC")
-    suspend fun getLogsInMonth(month: Int, year: Int ):List<LogsTable>
+    @Query("SELECT*FROM logs_table WHERE month = :month AND year = :year ORDER BY date DESC LIMIT 10 OFFSET :limit")
+    suspend fun getLogsInMonth(month: Int, year: Int, limit: Int):List<LogsTable>
 
     @Query("DELETE FROM logs_table WHERE id = :id")
     suspend fun deleteLog(id: Long):Int

@@ -1,42 +1,35 @@
-package com.teamdagger.financetracker.presentation.home
+package com.teamdagger.financetracker.presentation.log_list
 
 import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.synapsisid.smartdeskandroombooking.util.DataState
 import com.teamdagger.financetracker.domain.entities.Logs
 import com.teamdagger.financetracker.domain.entities.MonthExpense
 import com.teamdagger.financetracker.domain.usecase.DeleteLog
 import com.teamdagger.financetracker.domain.usecase.GetExpenseInMonthUseCase
-import com.teamdagger.financetracker.domain.usecase.GetRecentLogsUseCase
-import com.teamdagger.financetracker.domain.usecase.InsertLogUseCase
+import com.teamdagger.financetracker.domain.usecase.GetLogsInMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalCoroutinesApi
-class MainViewModel
+class LogsListViewModel
 @Inject
 constructor(
     private val getExpenseInMonthUseCase: GetExpenseInMonthUseCase,
-    private val getRecentLogsUseCase: GetRecentLogsUseCase,
-    private val insertLogUseCase: InsertLogUseCase,
+    private val getLogsInMonthUseCase: GetLogsInMonthUseCase,
     private val deleteLog: DeleteLog,
     private val savedStateHandle: SavedStateHandle
-):ViewModel() {
+):ViewModel(){
 
     private val _expenseStateEvent: MutableLiveData<DataState<MonthExpense>> = MutableLiveData()
     val expenseStateEvent: LiveData<DataState<MonthExpense>>
-    get() = _expenseStateEvent
-
-    private val _recentLogsStateEvent: MutableLiveData<DataState<List<Logs>>> = MutableLiveData()
-    val recentLogsStateEvent: LiveData<DataState<List<Logs>>>
-        get() = _recentLogsStateEvent
-
-    private val _insertLogStateEvent: MutableLiveData<DataState<Long>> = MutableLiveData()
-    val insertLogStateEvent: LiveData<DataState<Long>>
-        get() = _insertLogStateEvent
+        get() = _expenseStateEvent
 
     private val _deleteLogStateEvent: MutableLiveData<DataState<Int>> = MutableLiveData()
     val deleteLogStateEvent: LiveData<DataState<Int>>
@@ -50,24 +43,11 @@ constructor(
         }
     }
 
-    fun insertLog(data: Logs){
-        viewModelScope.launch {
-            coroutineScope {
-                val response = async(Dispatchers.IO) { insertLogUseCase.execute(data) }
-                _insertLogStateEvent.value =  response.await()
-            }
-        }
+    fun setLogsInMonthStateEvent(month: Int, year: Int): Flow<PagingData<Logs>> {
+        return getLogsInMonthUseCase.execute(month, year).cachedIn(viewModelScope)
     }
 
-    fun setRecentLogsState(){
-        viewModelScope.launch {
-            getRecentLogsUseCase.execute().onEach {
-                _recentLogsStateEvent.value = it
-            }.launchIn(viewModelScope)
-        }
-    }
-
-    fun deleteLog(id: Long){
+    fun setDeleteLogsStateEvent(id: Long){
         viewModelScope.launch {
             coroutineScope {
                 val response = async(Dispatchers.IO) { deleteLog.execute(id) }
@@ -75,5 +55,4 @@ constructor(
             }
         }
     }
-
 }

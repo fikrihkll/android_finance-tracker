@@ -1,5 +1,6 @@
 package com.teamdagger.financetracker.presentation.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import com.teamdagger.financetracker.data.datasources.local.FinanceDao
 import com.teamdagger.financetracker.data.datasources.local.tables.UsersTable
 import com.teamdagger.financetracker.databinding.ActivityMainBinding
 import com.teamdagger.financetracker.domain.entities.Logs
+import com.teamdagger.financetracker.presentation.log_list.LogListActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -77,6 +79,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onClick(){
+        binding.refreshMain.setOnRefreshListener {
+            viewModel.setRecentLogsState()
+            viewModel.setExpenseState(cal.get(Calendar.MONTH)+1, cal.get(Calendar.YEAR))
+        }
+
+        binding.btnAllLogs.setOnClickListener {
+            startActivity(Intent(this, LogListActivity::class.java))
+        }
+
         binding.btnSaveNominal.setOnClickListener {
             if(validate()){
                 setButtonLoading()
@@ -109,6 +120,7 @@ class MainActivity : AppCompatActivity() {
             when(it){
                 is DataState.Success -> {
                     adapterRc.setNewData(it.data)
+                    binding.refreshMain.isRefreshing = false
                 }
             }
         })

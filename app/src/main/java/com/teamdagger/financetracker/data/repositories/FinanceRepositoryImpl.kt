@@ -1,7 +1,12 @@
 package com.teamdagger.financetracker.data.repositories
 
+import android.content.Context
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.synapsisid.smartdeskandroombooking.util.DataState
 import com.teamdagger.financetracker.data.datasources.local.FinanceDao
+import com.teamdagger.financetracker.data.datasources.paging_sources.LogsListPagingSource
 import com.teamdagger.financetracker.data.models.LogsTableMapper
 import com.teamdagger.financetracker.data.models.MonthExpenseMapper
 import com.teamdagger.financetracker.domain.entities.Logs
@@ -14,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FinanceRepositoryImpl(
+    private val context: Context,
     private val localDao: FinanceDao
 ) : FinanceRepository  {
 
@@ -45,6 +51,16 @@ class FinanceRepositoryImpl(
         }catch (e:Exception){
             emit(DataState.Error(e))
         }
+    }
+
+    override fun getLogsInMonth(month: Int, year: Int): Flow<PagingData<Logs>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = LogsListPagingSource.NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { LogsListPagingSource(context, localDao, month, year) }
+        ).flow
     }
 
     override suspend fun insertLogs(data: Logs): DataState<Long>{

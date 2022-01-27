@@ -8,5 +8,6 @@ data class Logs(
     val month: Int,
     val year: Int,
     val nominal: Long,
-    val userId: Int
+    val userId: Int,
+    var isVisible: Boolean = true
 )
