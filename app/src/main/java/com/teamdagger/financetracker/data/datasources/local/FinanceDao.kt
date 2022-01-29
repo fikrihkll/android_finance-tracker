@@ -6,6 +6,7 @@ import androidx.room.Query
 import com.teamdagger.financetracker.data.datasources.local.tables.LogsTable
 import com.teamdagger.financetracker.data.datasources.local.tables.UsersTable
 import com.teamdagger.financetracker.data.models.MonthExpenseModel
+import com.teamdagger.financetracker.domain.entities.LogsDetail
 
 @Dao
 interface FinanceDao {
@@ -27,5 +28,8 @@ interface FinanceDao {
 
     @Query("DELETE FROM logs_table WHERE id = :id")
     suspend fun deleteLog(id: Long):Int
+
+    @Query("SELECT category, SUM(nominal) as total FROM logs_table WHERE month = :month AND year = :year GROUP BY category")
+    suspend fun getLogsDetailInMonth(month: Int, year: Int,):List<LogsDetail>
 
 }

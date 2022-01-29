@@ -37,4 +37,9 @@ object UseCaseModule {
     fun provideLogsInMonthUseCase(repo: FinanceRepository): GetLogsInMonthUseCase {
         return GetLogsInMonthUseCase(repo)
     }
+
+    @Provides
+    fun provideLogsDetailInMonthUseCase(repo: FinanceRepository): GetLogsDetailInMonthUseCase {
+        return GetLogsDetailInMonthUseCase(repo)
+    }
 }

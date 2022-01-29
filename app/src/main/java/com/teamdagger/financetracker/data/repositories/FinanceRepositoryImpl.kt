@@ -10,6 +10,7 @@ import com.teamdagger.financetracker.data.datasources.paging_sources.LogsListPag
 import com.teamdagger.financetracker.data.models.LogsTableMapper
 import com.teamdagger.financetracker.data.models.MonthExpenseMapper
 import com.teamdagger.financetracker.domain.entities.Logs
+import com.teamdagger.financetracker.domain.entities.LogsDetail
 import com.teamdagger.financetracker.domain.repositories.FinanceRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -92,7 +93,17 @@ class FinanceRepositoryImpl(
         }
     }
 
+    override suspend fun getLogsDetailInMonth(month: Int, year: Int): DataState<List<LogsDetail>> {
+        return try{
+            coroutineScope {
+                val response = async(Dispatchers.IO) { localDao.getLogsDetailInMonth(month, year) }
 
+                return@coroutineScope DataState.Success(response.await())
+            }
+        }catch (e:Exception){
+            return DataState.Error(e)
+        }
+    }
 
 
 }

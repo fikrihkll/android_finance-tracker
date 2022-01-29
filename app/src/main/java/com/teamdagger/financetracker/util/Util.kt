@@ -38,7 +38,7 @@ object Util {
     )
 
     val simpleDate = SimpleDateFormat("yyyyMd")
-    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
     val sdfDate = SimpleDateFormat("yyyy-MM-dd")
     val sdfDateFullMonth = SimpleDateFormat("EEE, MMMM dd, yyyy")
 

@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.HttpException
 import com.synapsisid.smartdeskandroombooking.util.DataState
 import com.synapsisid.smartdeskandroombooking.util.Util
+import com.teamdagger.financetracker.R
 import com.teamdagger.financetracker.databinding.ActivityLogListBinding
-import com.teamdagger.financetracker.domain.entities.Logs
-import com.teamdagger.financetracker.domain.entities.MonthYear
+import com.teamdagger.financetracker.presentation.logs_detail.LogsDetailFragment
 import com.teamdagger.financetracker.presentation.paging_item_load_state.ListLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -68,17 +68,31 @@ class LogListActivity : AppCompatActivity(), CoroutineScope {
         binding.toolbarLog.setNavigationOnClickListener {
             this.finish()
         }
+
+        binding.toolbarLog.setOnMenuItemClickListener {
+
+            when(it.itemId){
+                R.id.m_log_detail ->{
+
+                    val dl = LogsDetailFragment(binding.spMonth.selectedItemPosition+1, Integer.parseInt(binding.spYear.selectedItem.toString()))
+                    dl.show(supportFragmentManager, LogsDetailFragment::class.simpleName)
+
+                }
+            }
+
+            true
+        }
     }
 
     private fun subscribeDelete(){
-        viewModel.deleteLogStateEvent.observe(this, {
-            when(it){
-                is DataState.Success ->{
+        viewModel.deleteLogStateEvent.observe(this) {
+            when (it) {
+                is DataState.Success -> {
                     val now = Calendar.getInstance()
-                    viewModel.setExpenseState(now.get(Calendar.MONTH)+1, now.get(Calendar.YEAR))
+                    viewModel.setExpenseState(now.get(Calendar.MONTH) + 1, now.get(Calendar.YEAR))
                 }
             }
-        })
+        }
     }
 
     private fun subscribeExpense(){

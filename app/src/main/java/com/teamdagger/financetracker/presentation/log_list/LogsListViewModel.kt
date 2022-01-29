@@ -5,9 +5,11 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.synapsisid.smartdeskandroombooking.util.DataState
 import com.teamdagger.financetracker.domain.entities.Logs
+import com.teamdagger.financetracker.domain.entities.LogsDetail
 import com.teamdagger.financetracker.domain.entities.MonthExpense
 import com.teamdagger.financetracker.domain.usecase.DeleteLog
 import com.teamdagger.financetracker.domain.usecase.GetExpenseInMonthUseCase
+import com.teamdagger.financetracker.domain.usecase.GetLogsDetailInMonthUseCase
 import com.teamdagger.financetracker.domain.usecase.GetLogsInMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -21,6 +23,7 @@ import javax.inject.Inject
 class LogsListViewModel
 @Inject
 constructor(
+    private val getLogsDetailInMonthUseCase: GetLogsDetailInMonthUseCase,
     private val getExpenseInMonthUseCase: GetExpenseInMonthUseCase,
     private val getLogsInMonthUseCase: GetLogsInMonthUseCase,
     private val deleteLog: DeleteLog,
@@ -49,10 +52,10 @@ constructor(
 
     fun setDeleteLogsStateEvent(id: Long){
         viewModelScope.launch {
-            coroutineScope {
-                val response = async(Dispatchers.IO) { deleteLog.execute(id) }
-                _deleteLogStateEvent.value = response.await()
-            }
+            val response = async(Dispatchers.IO) { deleteLog.execute(id) }
+            _deleteLogStateEvent.value = response.await()
         }
     }
+
+
 }

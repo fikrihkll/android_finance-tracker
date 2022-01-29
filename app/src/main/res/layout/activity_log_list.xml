@@ -27,6 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
                 app:title="Log List"
+                app:menu="@menu/menu_log_list"
                 />
             <ProgressBar
                 android:visibility="gone"

@@ -3,11 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/drawable/bottom_sheet_dialog.xml" value="0.225" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/activity_chart.xml" value="0.264" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/activity_log_list.xml" value="0.264" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/dialog_logs_detail.xml" value="0.21822916666666667" />
+        <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/fragment_logs_detail.xml" value="0.21822916666666667" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/layout_logs.xml" value="0.25" />
+        <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/layout_logs_detail.xml" value="0.21822916666666667" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/layout/logs_list_load_state_footer_item.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/FinanceTracker/app/src/main/res/menu/menu_log_list.xml" value="0.21822916666666667" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/zackm/OneDrive/Documents/AndroidStudioProjects/KOTLIN/MyApplication/app/src/main/res/layout/layout_logs.xml" value="0.264" />
       </map>
