@@ -11,13 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinanceTracker">
         <activity
-            android:name=".presentation.log_list.LogListActivity"
+            android:name="com.teamdagger.financetracker.features.presentation.pages.log_list.LogListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.chart.ChartActivity"
+            android:name="com.teamdagger.financetracker.features.presentation.pages.chart.ChartActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.splash.SplashActivity"
+            android:name="com.teamdagger.financetracker.features.presentation.pages.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.home.MainActivity"
+            android:name="com.teamdagger.financetracker.features.presentation.pages.home.MainActivity"
             android:exported="true" />
     </application>
 
